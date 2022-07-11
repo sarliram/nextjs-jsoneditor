@@ -16,6 +16,7 @@ In Nextjs,add this css file in styles folder under src folder and call css file 
 https://drive.google.com/file/d/18xVG9kJdbbN8vHrr2Jb5sYXU_rdeDrfn/view?usp=sharing
 
 _app.js
+```jsx
 import './nextjs-jsoneditor.css' //download this file and use as global css in nextjs
 
 function MyApp({ Component, pageProps }) {
@@ -23,7 +24,7 @@ function MyApp({ Component, pageProps }) {
 }
 
 export default MyApp;
-
+```
 
 
 index.js
