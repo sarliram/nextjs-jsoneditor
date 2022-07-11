@@ -1,10 +1,19 @@
 {
   "name": "nextjs-jsoneditor",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "",
   "author": "raja-poudel",
+  "keywords": [
+    "nextjs",
+    "jsoneditor",
+    "jsoneditor-nextjs",
+    "jsonrichtexteditor"
+  ],
   "license": "MIT",
-  "repository": "raja-poudel/nextjs-jsoneditor",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/raja-poudel/nextjs-jsoneditor"
+  },
   "main": "dist/index.js",
   "module": "dist/index.modern.js",
   "source": "src/index.js",
