@@ -11,6 +11,9 @@ npm install --save nextjs-jsoneditor
 ```
 
 ## Usage
+In Nextjs,add this css file in styles folder under src folder and call css file in _app.js.
+
+https://drive.google.com/file/d/18xVG9kJdbbN8vHrr2Jb5sYXU_rdeDrfn/view?usp=sharing
 
 ```jsx
 import React, { Component } from 'react'
