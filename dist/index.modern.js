@@ -1,6 +1,61 @@
 import React, { Component } from 'react';
 import JSONEditor from 'jsoneditor/dist/jsoneditor-minimalist';
 
+function _extends() {
+  _extends = Object.assign ? Object.assign.bind() : function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+  return _extends.apply(this, arguments);
+}
+
+function _inheritsLoose(subClass, superClass) {
+  subClass.prototype = Object.create(superClass.prototype);
+  subClass.prototype.constructor = subClass;
+
+  _setPrototypeOf(subClass, superClass);
+}
+
+function _setPrototypeOf(o, p) {
+  _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) {
+    o.__proto__ = p;
+    return o;
+  };
+  return _setPrototypeOf(o, p);
+}
+
+function _objectWithoutPropertiesLoose(source, excluded) {
+  if (source == null) return {};
+  var target = {};
+  var sourceKeys = Object.keys(source);
+  var key, i;
+
+  for (i = 0; i < sourceKeys.length; i++) {
+    key = sourceKeys[i];
+    if (excluded.indexOf(key) >= 0) continue;
+    target[key] = source[key];
+  }
+
+  return target;
+}
+
+function _assertThisInitialized(self) {
+  if (self === void 0) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+
+  return self;
+}
+
 function createCommonjsModule(fn, module) {
 	return module = { exports: {} }, fn(module, module.exports), module.exports;
 }
@@ -1100,59 +1155,62 @@ if (process.env.NODE_ENV !== 'production') {
 }
 });
 
-const modes = {
+var _excluded = ["allowedModes", "innerRef", "htmlElementProps", "tag", "onChange"],
+    _excluded2 = ["allowedModes", "schema", "name", "theme", "schemaRefs", "innerRef", "htmlElementProps", "tag", "onChange"],
+    _excluded3 = ["value"];
+var modes = {
   tree: 'tree',
   view: 'view',
   form: 'form',
   code: 'code',
   text: 'text'
 };
-const values = Object.values(modes);
+var values = Object.values(modes);
 modes.allValues = values;
-class Editor extends Component {
-  constructor(props) {
-    super(props);
-    this.htmlElementRef = null;
-    this.jsonEditor = null;
-    this.handleChange = this.handleChange.bind(this);
-    this.setRef = this.setRef.bind(this);
-    this.collapseAll = this.collapseAll.bind(this);
-    this.expandAll = this.expandAll.bind(this);
-    this.focus = this.focus.bind(this);
+
+var Editor = /*#__PURE__*/function (_Component) {
+  _inheritsLoose(Editor, _Component);
+
+  function Editor(props) {
+    var _this;
+
+    _this = _Component.call(this, props) || this;
+    _this.htmlElementRef = null;
+    _this.jsonEditor = null;
+    _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_this));
+    _this.setRef = _this.setRef.bind(_assertThisInitialized(_this));
+    _this.collapseAll = _this.collapseAll.bind(_assertThisInitialized(_this));
+    _this.expandAll = _this.expandAll.bind(_assertThisInitialized(_this));
+    _this.focus = _this.focus.bind(_assertThisInitialized(_this));
+    return _this;
   }
 
-  componentDidMount() {
-    const {
-      allowedModes,
-      innerRef,
-      htmlElementProps,
-      tag,
-      onChange,
-      ...rest
-    } = this.props;
-    this.createEditor({ ...rest,
+  var _proto = Editor.prototype;
+
+  _proto.componentDidMount = function componentDidMount() {
+    var _this$props = this.props,
+        allowedModes = _this$props.allowedModes,
+        rest = _objectWithoutPropertiesLoose(_this$props, _excluded);
+
+    this.createEditor(_extends({}, rest, {
       modes: allowedModes
-    });
-  }
+    }));
+  };
 
-  componentDidUpdate({
-    allowedModes,
-    schema,
-    name,
-    theme,
-    schemaRefs,
-    innerRef,
-    htmlElementProps,
-    tag,
-    onChange,
-    ...rest
-  }) {
+  _proto.componentDidUpdate = function componentDidUpdate(_ref) {
+    var allowedModes = _ref.allowedModes,
+        schema = _ref.schema,
+        name = _ref.name,
+        theme = _ref.theme,
+        schemaRefs = _ref.schemaRefs,
+        rest = _objectWithoutPropertiesLoose(_ref, _excluded2);
+
     if (this.jsonEditor) {
       if (theme !== this.props.theme) {
-        this.createEditor({ ...rest,
-          theme,
+        this.createEditor(_extends({}, rest, {
+          theme: theme,
           modes: allowedModes
-        });
+        }));
       } else {
         if (schema !== this.props.schema || schemaRefs !== this.props.schemaRefs) {
           this.jsonEditor.setSchema(schema, schemaRefs);
@@ -1163,32 +1221,31 @@ class Editor extends Component {
         }
       }
     }
-  }
+  };
 
-  shouldComponentUpdate({
-    htmlElementProps
-  }) {
+  _proto.shouldComponentUpdate = function shouldComponentUpdate(_ref2) {
+    var htmlElementProps = _ref2.htmlElementProps;
     return htmlElementProps !== this.props.htmlElementProps;
-  }
+  };
 
-  componentWillUnmount() {
+  _proto.componentWillUnmount = function componentWillUnmount() {
     if (this.jsonEditor) {
       this.jsonEditor.destroy();
       this.jsonEditor = null;
     }
-  }
+  };
 
-  handleChange() {
+  _proto.handleChange = function handleChange() {
     if (this.props.onChange) {
       try {
         this.err = null;
-        const text = this.jsonEditor.getText();
+        var text = this.jsonEditor.getText();
 
         if (text === '') {
           this.props.onChange(null);
         }
 
-        const currentJson = this.jsonEditor.get();
+        var currentJson = this.jsonEditor.get();
 
         if (this.props.value !== currentJson) {
           this.props.onChange(currentJson);
@@ -1197,60 +1254,59 @@ class Editor extends Component {
         this.err = err;
       }
     }
-  }
+  };
 
-  setRef(element) {
+  _proto.setRef = function setRef(element) {
     this.htmlElementRef = element;
 
     if (this.props.innerRef) {
       this.props.innerRef(element);
     }
-  }
+  };
 
-  createEditor({
-    value,
-    ...rest
-  }) {
+  _proto.createEditor = function createEditor(_ref3) {
+    var value = _ref3.value,
+        rest = _objectWithoutPropertiesLoose(_ref3, _excluded3);
+
     if (this.jsonEditor) {
       this.jsonEditor.destroy();
     }
 
-    this.jsonEditor = new JSONEditor(this.htmlElementRef, {
-      onChange: this.handleChange,
-      ...rest
-    });
+    this.jsonEditor = new JSONEditor(this.htmlElementRef, _extends({
+      onChange: this.handleChange
+    }, rest));
     this.jsonEditor.set(value);
-  }
+  };
 
-  collapseAll() {
+  _proto.collapseAll = function collapseAll() {
     if (this.jsonEditor) {
       this.jsonEditor.collapseAll();
     }
-  }
+  };
 
-  expandAll() {
+  _proto.expandAll = function expandAll() {
     if (this.jsonEditor) {
       this.jsonEditor.expandAll();
     }
-  }
+  };
 
-  focus() {
+  _proto.focus = function focus() {
     if (this.jsonEditor) {
       this.jsonEditor.focus();
     }
-  }
+  };
 
-  render() {
-    const {
-      htmlElementProps,
-      tag
-    } = this.props;
-    return React.createElement(tag, { ...htmlElementProps,
+  _proto.render = function render() {
+    var _this$props2 = this.props,
+        htmlElementProps = _this$props2.htmlElementProps,
+        tag = _this$props2.tag;
+    return React.createElement(tag, _extends({}, htmlElementProps, {
       ref: this.setRef
-    });
-  }
+    }));
+  };
 
-}
+  return Editor;
+}(Component);
 Editor.propTypes = {
   value: propTypes.oneOfType([propTypes.object, propTypes.array]),
   mode: propTypes.oneOf(values),

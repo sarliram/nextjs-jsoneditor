@@ -7,6 +7,7 @@
 ## Install
 
 ```bash
+npm install --save jsoneditor
 npm install --save nextjs-jsoneditor
 ```
 
