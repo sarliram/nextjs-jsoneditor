@@ -18,6 +18,14 @@ https://drive.google.com/file/d/18xVG9kJdbbN8vHrr2Jb5sYXU_rdeDrfn/view?usp=shari
 _app.js
 import './nextjs-jsoneditor.css' //download this file and use as global css in nextjs
 
+function MyApp({ Component, pageProps }) {
+  return <Component {...pageProps} />;
+}
+
+export default MyApp;
+
+
+
 index.js
 ```jsx
 import React, { Component } from 'react'
